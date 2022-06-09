@@ -2297,6 +2297,7 @@ function renderError() {
     const jobs = await getAllJobs();
     renderJobs(jobs);
   } catch (error) {
+    alert(error)
     renderError();
   }
 })();
