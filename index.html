@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl" lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>job-crawler </title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.rtl.css">
+</head>
+
+<body class="bg-light">
+    <header>
+        <div class="bg-dark text-secondary px-4 py-5 text-center">
+            <div class="py-3">
+                <h1 class="display-5 fw-bold text-white">job-crawler</h1>
+                <div class="col-lg-6 mx-auto">
+                    <p class="fs-5 mb-4"> خزنده وب برای دسترسی به به روز ترین پیشنهاد های شغلی ایران در یک صفحه </p>
+                </div>
+                <a class="btn btn-outline-light btn-lg" href="https://github.com/MMSabbaghi">گیتهاب</a>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="container">
+        <div class="job-cards my-3">
+            <div class="d-flex align-items-center justify-content-center position-fixed top-0 bg-dark"
+                style="width:100vw; height:100vh; left: 0;">
+                <div class="job-fetch-status d-flex flex-column align-items-center">
+                    <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
+                    </div>
+                    <span class="text-light mt-3"> دریافت اطلاعات... </span>
+                </div>
+            </div>
+        </div>
+
+</body>
+<script src="./bundle.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</html>
