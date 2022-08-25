@@ -1,11 +1,8 @@
-const cheerio = require("cheerio");
-const axios = require("axios");
-const JobSearchSites = require("./jobsearchsites");
-
 async function loadData(url) {
   try {
     const { data } = await axios.get(url);
-    return cheerio.load(data);
+    const parser = new DOMParser();
+    return parser.parseFromString(data, "text/html");
   } catch (error) {
     console.log(error);
     throw new Error(error.code || "Error");
@@ -14,23 +11,25 @@ async function loadData(url) {
 
 async function getJobs({ url, siteName, selectors }) {
   const $ = await loadData(url);
+  const cards = $.querySelectorAll(selectors.card);
+  const dataList = [];
+  cards.forEach((el) => {
+    const findEl = (selector) => el.querySelector(selector);
+    const selectInfo = (selector) => findEl(selector)?.innerText.trim();
+    const selectLink = ($, attr) =>
+      selectors.root + findEl($)?.getAttribute(attr);
 
-  const jobs = $(selectors.card).map((_i, el) => {
-    const findEl = (selector) => $(el).find(selector);
-    const selectInfo = (selector) => findEl(selector).text().trim();
-    const selectLink = ($, attr) => selectors.root + findEl($).attr(attr);
-
-    return {
+    dataList.push({
       title: selectInfo(selectors.title),
       place: selectInfo(selectors.place),
       company: selectInfo(selectors.company),
       link: selectLink(selectors.link, "href"),
       img: selectLink(selectors.img, "src"),
       siteName,
-    };
+    });
   });
 
-  return jobs.toArray();
+  return dataList;
 }
 
 async function getAllJobs() {
@@ -90,7 +89,7 @@ function renderError() {
     const jobs = await getAllJobs();
     renderJobs(jobs);
   } catch (error) {
-    alert(error)
+    console.log(error);
     renderError();
   }
 })();
